@@ -1,6 +1,6 @@
-package org.example;
+package com.kingsleague.presentation;
 
-public class Main {
+public class Display {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
