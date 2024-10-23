@@ -124,6 +124,14 @@ public class Tournament {
         this.timeCeremony = timeCeremony;
     }
 
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
+
     public TournamentStatut getStatut() {
         return statut;
     }

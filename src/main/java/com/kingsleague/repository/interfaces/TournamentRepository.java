@@ -14,4 +14,5 @@ public interface TournamentRepository {
     List<Tournament> getAll();
     Tournament get(Long id);
     Tournament getByName(String name);
+    int calculateEstimatedDuration(Long tournamentId);
 }

@@ -3,7 +3,6 @@ package com.kingsleague.model;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
 @Entity
 @Table(name = "game")
 public class Game {
@@ -17,16 +16,15 @@ public class Game {
     @Max(value = 6, message = "Difficulty cannot exceed 6")
     private String difficulty;
 
+    // Change to int since it's a numeric value
     @Column(name = "duration_average_match", nullable = false)
     @Min(value = 1, message = "Average match duration must be at least 1 minute")
     @Max(value = 180, message = "Average match duration cannot exceed 180 minutes")
-    private String durationAverageMatch;
+    private int durationAverageMatch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
-
-
 
     // Getters and Setters
     public Long getId() {
@@ -45,11 +43,11 @@ public class Game {
         this.difficulty = difficulty;
     }
 
-    public String getDurationAverageMatch() {
+    public int getDurationAverageMatch() {
         return durationAverageMatch;
     }
 
-    public void setDurationAverageMatch(String durationAverageMatch) {
+    public void setDurationAverageMatch(int durationAverageMatch) {
         this.durationAverageMatch = durationAverageMatch;
     }
 
@@ -67,7 +65,7 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", difficulty='" + difficulty + '\'' +
-                ", durationAverageMatch='" + durationAverageMatch + '\'' +
+                ", durationAverageMatch=" + durationAverageMatch +
                 ", tournament=" + (tournament != null ? tournament.getName() : "No tournament") +
                 '}';
     }
