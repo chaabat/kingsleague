@@ -6,12 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 public class TeamRepositoryImpl implements TeamRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerRepositoryImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeamRepositoryImpl.class);
+
+    private static  final String LIST = "SELECT t FROM Team t" ;
+    private static  final String GET_NAME = "SELECT t FROM Team t WHERE t.name = :name " ;
 
     private static TeamRepositoryImpl instance;
     private EntityManager entityManager;
@@ -32,26 +36,45 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     @Override
     public void add(Team team) {
-
+        LOGGER.info("Adding team: {}", team.getName());
+entityManager.persist(team);
     }
 
     @Override
     public void update(Team team) {
-
+        LOGGER.info("Updating team: {}", team.getName());
+entityManager.merge(team);
     }
 
     @Override
     public void delete(Long id) {
-
+        LOGGER.info("Deleting team: {}", id);
+Team team = entityManager.find(Team.class, id);
+if (team != null) {
+    entityManager.remove(team);
+}
     }
 
     @Override
     public List<Team> getAll() {
-        return Collections.emptyList();
+        LOGGER.info("list all teams");
+        TypedQuery<Team> query = entityManager.createQuery(LIST, Team.class);
+        return query.getResultList();
+
     }
 
     @Override
-    public Optional<Team> get(Long id) {
-        return Optional.empty();
+    public Team get(Long id) {
+        LOGGER.info("Get team with id: {}", id);
+       return  entityManager.find(Team.class, id);
+    }
+
+    @Override
+    public Team getByName(String name) {
+        LOGGER.info("Finding team with name: {}", name);
+        TypedQuery<Team> query = entityManager.createQuery(GET_NAME, Team.class);
+        query.setParameter("name", name);
+        List<Team> teams = query.getResultList();
+        return teams.isEmpty() ? null : teams.get(0);
     }
 }

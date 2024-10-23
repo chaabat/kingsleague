@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class GameRepositoryImpl implements GameRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerRepositoryImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameRepositoryImpl.class);
 
     private static final String LIST = "SELECT DISTINCT g FROM Game g LEFT JOIN FETCH g.tournament t LEFT JOIN FETCH t.teams";
 
