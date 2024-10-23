@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8473b76b-8a2e-4f3a-b586-4d0b4d8b559e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Team.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Tournament.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Tournament.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729502054610</updated>
       <workItem from="1729674922354" duration="3428000" />
-      <workItem from="1729679522000" duration="2232000" />
+      <workItem from="1729679522000" duration="3061000" />
     </task>
     <servers />
   </component>

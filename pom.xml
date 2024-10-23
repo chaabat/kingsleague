@@ -107,8 +107,6 @@
                 </configuration>
             </plugin>
 
-
-
             <!-- JaCoCo for Code Coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>

@@ -52,7 +52,12 @@ public class TournamentRepositoryImpl implements TournamentRepository {
     }
 
     @Override
-    public Optional<Tournament> get(Long id) {
-        return Optional.empty();
+    public Tournament get(Long id) {
+        return null;
+    }
+
+    @Override
+    public Tournament getByName(String name) {
+        return null;
     }
 }
