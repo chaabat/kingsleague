@@ -12,5 +12,6 @@ public interface PlayerRepository {
     void update(Player player);
     void delete(Long id);
     List<Player> getAll();
-    Optional<Player> get(Long id);
+     Player get(Long id);
+    Player getByUsername(String username);
 }
