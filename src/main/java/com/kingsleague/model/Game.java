@@ -14,7 +14,7 @@ public class Game {
     @Column(name = "difficulty", nullable = false)
     @Min(value = 1, message = "Difficulty must be at least 1")
     @Max(value = 6, message = "Difficulty cannot exceed 6")
-    private String difficulty;
+    private int difficulty;
 
     // Change to int since it's a numeric value
     @Column(name = "duration_average_match", nullable = false)
@@ -35,11 +35,11 @@ public class Game {
         this.id = id;
     }
 
-    public String getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 
