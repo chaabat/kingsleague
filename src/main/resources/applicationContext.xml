@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.kingsleague"/>
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="esports-pu"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
+        <constructor-arg value="-web,-webAllowOthers,-webPort,0"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+
+    <!-- Repositories -->
+    <bean id="playerRepository" class="com.kingsleague.repository.implementation.PlayerRepositoryImpl" factory-method="getInstance">
+        <property name="entityManager" ref="entityManager" />
+    </bean>
+
+    <bean id="teamRepository" class="com.kingsleague.repository.implementation.TeamRepositoryImpl" factory-method="getInstance">
+        <property name="entityManager" ref="entityManager" />
+    </bean>
+
+    <bean id="tournamentRepository" class="com.kingsleague.repository.implementation.TournamentRepositoryImpl" factory-method="getInstance">
+        <property name="entityManager" ref="entityManager" />
+    </bean>
+
+    <bean id="tournamentRepositoryExtension" class="com.kingsleague.repository.implementation.TournamentRepositoryExtension"/>
+
+    <bean id="gameRepository" class="com.kingsleague.repository.implementation.GameRepositoryImpl" factory-method="getInstance">
+        <property name="entityManager" ref="entityManager" />
+    </bean>
+    <!-- Services -->
+    <bean id="playerService" class="com.kingsleague.service.PlayerService">
+        <property name="playerRepository" ref="playerRepository"/>
+    </bean>
+
+    <bean id="teamService" class="com.kingsleague.service.TeamService">
+        <property name="teamRepository" ref="teamRepository"/>
+        <property name="playerRepository" ref="playerRepository"/>
+    </bean>
+
+    <bean id="tournamentService" class="com.kingsleague.service.TournamentService">
+        <property name="tournamentRepository" ref="tournamentRepository"/>
+        <property name="teamRepository" ref="teamRepository"/>
+    </bean>
+    <bean id="gameService" class="com.kingsleague.service.GameService">
+        <property name="gameRepository" ref="gameRepository"/>
+    </bean>
+    <!-- Controllers -->
+    <bean id="playerController" class="com.kingsleague.controller.PlayerController">
+        <property name="playerService" ref="playerService"/>
+    </bean>
+
+    <bean id="teamController" class="com.kingsleague.controller.TeamController">
+        <property name="teamService" ref="teamService"/>
+    </bean>
+
+    <bean id="tournamentController" class="com.kingsleague.controller.TournamentController">
+        <property name="tournamentService" ref="tournamentService"/>
+    </bean>
+
+    <bean id="gameController" class="com.kingsleague.controller.GameController">
+        <property name="gameService" ref="gameService"/>
+    </bean>
+
+</beans>
