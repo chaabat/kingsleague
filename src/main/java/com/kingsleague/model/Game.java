@@ -3,6 +3,8 @@ package com.kingsleague.model;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "game")
 public class Game {
@@ -10,6 +12,12 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "Game name cannot be null")
+    @Column(name = "name" , nullable = false)
+    private String name;
+
+
 
     @Column(name = "difficulty", nullable = false)
     @Min(value = 1, message = "Difficulty must be at least 1")
@@ -33,6 +41,13 @@ public class Game {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public   String getName() {
+        return name;
+    }
+
+    public void setName( String name) {
+        this.name = name;
     }
 
     public int getDifficulty() {
