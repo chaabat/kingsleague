@@ -29,15 +29,7 @@ public class Team {
     @Column(name = "ranking")
     private int ranking;
 
-    // Constructors
-    public Team() {}
 
-    public Team(String name, List<Player> players, List<Tournament> tournaments, int ranking) {
-        this.name = name;
-        this.players = players;
-        this.tournaments = tournaments;
-        this.ranking = ranking;
-    }
 
     // Getters and Setters
     public Long getId() {

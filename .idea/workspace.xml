@@ -5,34 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8473b76b-8a2e-4f3a-b586-4d0b4d8b559e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/GameController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/PlayerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TeamController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TournamentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Team.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Tournament.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Tournament.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/enums/Difficulty.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/GameDisplay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/PlayerDisplay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/TeamDislpay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/TournamentDislpay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/GameRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/GameRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/PlayerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/PlayerRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/TeamRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/TeamRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/TournamentRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/TournamentRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/GameRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/PlayerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/TeamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/TeamRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/TournamentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/TournamentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/TeamService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/TournamentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/TournamentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/Display.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,24 +51,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;KIN-16-player-managment&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java/jdk-22&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;build.tools&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Display.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Program Files/Java/jdk-22",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "build.tools",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="docs" factoryName="Docutils task">
       <module name="kingsleague" />
@@ -123,55 +105,6 @@
       <option name="docutils_open_in_browser" value="false" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="esport-tournament-management" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="esport-tournament-management" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <module name="esport-tournament-management" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="esport-tournament-management" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <method v="2" />
-    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -190,6 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729502054610</updated>
       <workItem from="1729674922354" duration="3428000" />
+      <workItem from="1729679522000" duration="2232000" />
     </task>
     <servers />
   </component>

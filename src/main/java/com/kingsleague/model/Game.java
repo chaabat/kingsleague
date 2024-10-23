@@ -1,6 +1,8 @@
 package com.kingsleague.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "game")
@@ -11,23 +13,20 @@ public class Game {
     private Long id;
 
     @Column(name = "difficulty", nullable = false)
+    @Min(value = 1, message = "Difficulty must be at least 1")
+    @Max(value = 6, message = "Difficulty cannot exceed 6")
     private String difficulty;
 
     @Column(name = "duration_average_match", nullable = false)
+    @Min(value = 1, message = "Average match duration must be at least 1 minute")
+    @Max(value = 180, message = "Average match duration cannot exceed 180 minutes")
     private String durationAverageMatch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
-    // Constructors
-    public Game() {}
 
-    public Game(String difficulty, String durationAverageMatch, Tournament tournament) {
-        this.difficulty = difficulty;
-        this.durationAverageMatch = durationAverageMatch;
-        this.tournament = tournament;
-    }
 
     // Getters and Setters
     public Long getId() {

@@ -49,21 +49,7 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Game> games;
 
-    // Constructors
-    public Tournament() {}
 
-    public Tournament(String name, Date dateStart, Date endDate, int numberSpectators, List<Team> teams,
-                      int estimatedDuration, int timePause, int timeCeremony, TournamentStatut statut) {
-        this.name = name;
-        this.dateStart = dateStart;
-        this.endDate = endDate;
-        this.numberSpectators = numberSpectators;
-        this.teams = teams;
-        this.estimatedDuration = estimatedDuration;
-        this.timePause = timePause;
-        this.timeCeremony = timeCeremony;
-        this.statut = statut;
-    }
 
     // Getters and Setters
     public Long getId() {

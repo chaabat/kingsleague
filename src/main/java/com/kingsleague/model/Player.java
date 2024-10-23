@@ -22,14 +22,7 @@ public class Player {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
-    // Constructors
-    public Player() {}
 
-    public Player(String username, int age, Team team) {
-        this.username = username;
-        this.age = age;
-        this.team = team;
-    }
 
     // Getters and Setters
     public Long getId() {
