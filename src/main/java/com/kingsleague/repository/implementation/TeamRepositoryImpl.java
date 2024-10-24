@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,17 +63,17 @@ if (team != null) {
     }
 
     @Override
-    public Team get(Long id) {
+    public Optional<Team> get(Long id) {
         LOGGER.info("Get team with id: {}", id);
-       return  entityManager.find(Team.class, id);
+       return Optional.ofNullable(entityManager.find(Team.class, id));
     }
 
     @Override
-    public Team getByName(String name) {
+    public Optional<Team> getByName(String name) {
         LOGGER.info("Finding team with name: {}", name);
         TypedQuery<Team> query = entityManager.createQuery(GET_NAME, Team.class);
         query.setParameter("name", name);
         List<Team> teams = query.getResultList();
-        return teams.isEmpty() ? null : teams.get(0);
+        return teams.isEmpty() ? null : Optional.ofNullable(teams.get(0));
     }
 }

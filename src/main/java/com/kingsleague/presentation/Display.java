@@ -16,6 +16,10 @@ public class Display {
         String h2ConsoleUrl = h2WebServer.getURL();
         LOGGER.info("H2 Console URL: {}", h2ConsoleUrl);
 
+        // Initialize and start the PlayerDisplay
+        PlayerDisplay playerDisplay = new PlayerDisplay();
+        playerDisplay.start(); // Start the player management functionality
+
         LOGGER.info("E-Sports Tournament Management System terminated");
     }
 }

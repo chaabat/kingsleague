@@ -8,6 +8,7 @@ import com.kingsleague.repository.interfaces.TeamRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class TeamService {
@@ -22,7 +23,7 @@ public class TeamService {
         this.playerRepository = playerRepository;
     }
 
-    public Team getTeamById(Long id) {
+    public Optional<Team> getTeamById(Long id) {
         return teamRepository.get(id);
     }
 
@@ -31,7 +32,7 @@ public class TeamService {
         return teamRepository.getAll();
     }
 
-    public Team getTeamByName(String name) {
+    public Optional<Team> getTeamByName(String name) {
         return teamRepository.getByName(name);
     }
 
@@ -47,22 +48,22 @@ public class TeamService {
     }
 
     public void deleteTeamByName(String name) {
-        Team team = teamRepository.getByName(name);
-        if (team != null) {
-            deleteTeam(team.getId());
+        Optional<Team> teamOptional = teamRepository.getByName(name);
+        if (teamOptional.isPresent()) {
+            deleteTeam(teamOptional.get().getId());
+        } else {
+            throw new IllegalArgumentException("Team not found with name: " + name);
         }
     }
 
-    public void addPlayerToTeam(String teamName, String playerUsername) {
-        Team team = teamRepository.getByName(teamName);
-        if (team == null) {
-            throw new IllegalArgumentException("Team not found with name: " + teamName);
-        }
 
-        Player player = playerRepository.getByUsername(playerUsername);
-        if (player == null) {
-            throw new IllegalArgumentException("Player not found with username: " + playerUsername);
-        }
+    public void addPlayerToTeam(String teamName, String playerUsername) {
+        Team team = teamRepository.getByName(teamName)
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with name: " + teamName));
+
+        Player player = playerRepository.getByUsername(playerUsername)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found with username: " + playerUsername));
+
         team.getPlayers().add(player);
         player.setTeam(team);
         teamRepository.update(team);
@@ -70,15 +71,11 @@ public class TeamService {
     }
 
     public void removePlayerFromTeam(String teamName, String playerUsername) {
-        Team team = teamRepository.getByName(teamName);
-        if (team == null) {
-            throw new IllegalArgumentException("Team not found with name: " + teamName);
-        }
+        Team team = teamRepository.getByName(teamName)
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with name: " + teamName));
 
-        Player player = playerRepository.getByUsername(playerUsername);
-        if (player == null) {
-            throw new IllegalArgumentException("Player not found with username: " + playerUsername);
-        }
+        Player player = playerRepository.getByUsername(playerUsername)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found with username: " + playerUsername));
 
         if (team.getPlayers().remove(player)) {
             player.setTeam(null);
@@ -88,4 +85,6 @@ public class TeamService {
             throw new IllegalArgumentException("Player is not a member of this team");
         }
     }
+
+
 }

@@ -1,11 +1,11 @@
 package com.kingsleague.service;
 
-
 import com.kingsleague.model.Player;
 import com.kingsleague.repository.interfaces.PlayerRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class PlayerService {
@@ -15,7 +15,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public Player getPlayerById(Long id) {
+    public Optional<Player> getPlayerById(Long id) {
         return playerRepository.get(id);
     }
 
@@ -24,7 +24,7 @@ public class PlayerService {
         return playerRepository.getAll();
     }
 
-    public Player getPlayerByUsername(String username) {
+    public Optional<Player> getPlayerByUsername(String username) {
         return playerRepository.getByUsername(username);
     }
 
@@ -35,13 +35,13 @@ public class PlayerService {
     public void updatePlayer(Player player) {
         playerRepository.update(player);
     }
+
     public void deletePlayer(Long id) {
         playerRepository.delete(id);
     }
+
     public void deletePlayerByUsername(String username) {
-        Player player = playerRepository.getByUsername(username);
-        if (player != null) {
-            deletePlayer(player.getId());
-        }
+        Optional<Player> optionalPlayer = playerRepository.getByUsername(username);
+        optionalPlayer.ifPresent(player -> deletePlayer(player.getId()));
     }
 }

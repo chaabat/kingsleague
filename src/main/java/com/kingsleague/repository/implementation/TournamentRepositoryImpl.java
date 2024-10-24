@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,8 +50,8 @@ public class TournamentRepositoryImpl implements TournamentRepository {
     @Override
     public void delete(Long id) {
         LOGGER.info("Deleting tournament: {}", id);
-        Tournament tournament = get(id);
-        if (tournament != null) {
+        Optional<Tournament> tournament = get(id);
+        if (tournament.isPresent()) {
             entityManager.remove(tournament);
         }
 
@@ -66,45 +65,48 @@ public class TournamentRepositoryImpl implements TournamentRepository {
     }
 
     @Override
-    public Tournament get(Long id) {
+    public Optional<Tournament> get(Long id) {
         LOGGER.info("Finding tournament with id: {}", id);
-        return entityManager.find(Tournament.class, id);
+        return Optional.ofNullable(entityManager.find(Tournament.class, id));
     }
 
     @Override
-    public Tournament getByName(String name) {
+    public Optional<Tournament> getByName(String name) {
         LOGGER.info("Finding tournament with name: {}", name);
         TypedQuery<Tournament> query = entityManager.createQuery(GET_NAME, Tournament.class);
         query.setParameter("name", name);
         List<Tournament> tournaments = query.getResultList();
-        return tournaments.isEmpty() ? null : tournaments.get(0);
+        return tournaments.isEmpty() ? null : Optional.ofNullable(tournaments.get(0));
     }
 
     @Override
     public int calculateEstimatedDuration(Long tournamentId) {
         LOGGER.info("Calculating estimated duration for tournament with id: {}", tournamentId);
 
-        Tournament tournament = get(tournamentId);
-        if (tournament == null || tournament.getGames() == null || tournament.getGames().isEmpty()) {
-            LOGGER.warn("Tournament or games not found for id: {}", tournamentId);
+        Optional<Tournament> tournamentOptional = get(tournamentId);
+
+        // Check if the tournament is present using isPresent()
+        if (!tournamentOptional.isPresent() || tournamentOptional.get().getTeams() == null ||
+                tournamentOptional.get().getTeams().isEmpty() || tournamentOptional.get().getGame() == null) {
+            LOGGER.warn("Tournament, teams, or game not found for id: {}", tournamentId);
             return 0;
         }
 
-        if (tournament.getTeams() == null || tournament.getTeams().isEmpty()) {
-            LOGGER.warn("No teams found for tournament with id: {}", tournamentId);
-            return 0;
-        }
+        // Now we can safely retrieve the tournament
+        Tournament tournament = tournamentOptional.get();
 
-
+        // Get the number of teams
         int numberOfTeams = tournament.getTeams().size();
-        int averageMatchDuration = tournament.getGames().get(0).getDurationAverageMatch();  // Assuming all games have the same average match duration
+        int averageMatchDuration = tournament.getGame().getDurationAverageMatch();  // Assuming this returns the average match duration
 
-        // Include the break time (timePause)
-        int estimatedDuration = (numberOfTeams * averageMatchDuration) + tournament.getTimePause();
+        // Include the break time (timePause) and calculate estimated duration
+        int estimatedDuration = (numberOfTeams * averageMatchDuration) + tournament.getTimePause() + tournament.getTimeCeremony();
 
         LOGGER.info("Estimated duration for tournament with id {}: {} minutes", tournamentId, estimatedDuration);
-
         return estimatedDuration;
     }
+
+
+
 
 }

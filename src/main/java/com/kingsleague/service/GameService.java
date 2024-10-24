@@ -7,6 +7,7 @@ import com.kingsleague.repository.interfaces.TeamRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class GameService {
@@ -23,7 +24,7 @@ public class GameService {
         this.teamRepository = teamRepository;
     }
 
-    public Game getGame(Long id) {
+    public Optional<Game> getGame(Long id) {
         return gameRepository.get(id);
     }
 
@@ -32,7 +33,7 @@ public class GameService {
         return gameRepository.getAll();
     }
 
-    public Game getGameByName(String name){
+    public Optional<Game> getGameByName(String name){
         return gameRepository.getByName(name);
     }
 
@@ -49,22 +50,23 @@ public class GameService {
     }
 
     public void deleteGameByName(String name) {
-        Game game = gameRepository.getByName(name);
-        if (game != null) {
-            deleteGame(game.getId());
-        }
+        Optional<Game> gameOptional = gameRepository.getByName(name);
+        Game game = gameOptional.orElseThrow(() ->
+                new IllegalArgumentException("Game not found with name: " + name)
+        );
+        deleteGame(game.getId());
     }
+    public void addTeamToGame(String gameName, String teamName) {
+        Optional<Game> gameOptional = gameRepository.getByName(gameName);
+        Game game = gameOptional.orElseThrow(() ->
+                new IllegalArgumentException("Game not found with name: " + gameName)
+        );
 
-    public void addTeamToGame(String gameName, String teamName){
-        Game game = gameRepository.getByName(gameName);
-        if (game == null) {
-            throw new IllegalArgumentException("Game not found with name: " + gameName);
-        }
-
-        Team team = teamRepository.getByName(teamName);
-        if (team == null) {
-            throw new IllegalArgumentException("Team not found with name: " + teamName);
-        }
+        // Assuming teamRepository.getByName returns Optional<Team>
+        Team team = teamRepository.getByName(teamName)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Team not found with name: " + teamName)
+                );
 
         game.getTeams().add(team);
         team.getGames().add(game);
@@ -73,22 +75,30 @@ public class GameService {
     }
 
     public void removeTeamFromGame(String gameName, String teamName) {
-        Game game = gameRepository.getByName(gameName);
-        if (game == null) {
-            throw new IllegalArgumentException("Game not found with name: " + gameName);
-        }
+        Optional<Game> gameOptional = gameRepository.getByName(gameName);
+        Game game = gameOptional.orElseThrow(() ->
+                new IllegalArgumentException("Game not found with name: " + gameName)
+        );
 
-        Team team = teamRepository.getByName(teamName);
-        if (team == null) {
-            throw new IllegalArgumentException("Team not found with name: " + teamName);
-        }
+        // Assuming teamRepository.getByName returns Optional<Team>
+        Team team = teamRepository.getByName(teamName)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Team not found with name: " + teamName)
+                );
 
         if (game.getTeams().remove(team)) {
             team.getGames().remove(game);
             gameRepository.update(game);
             teamRepository.update(team);
+        } else {
+            throw new IllegalArgumentException("Team is not part of this game");
         }
     }
 
 
 }
+
+
+
+
+

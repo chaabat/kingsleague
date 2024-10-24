@@ -27,12 +27,12 @@ public class TournamentService {
         this.teamRepository = teamRepository;
     }
 
-    public Tournament getTournamentById(Long id) {
+    public Optional<Tournament> getTournamentById(Long id) {
         return Optional.ofNullable(tournamentRepository.get(id)).orElseThrow(()
                 ->new IllegalArgumentException("Tournament not found"));
     }
 
-    public Tournament getTournamentByName(String name) {
+    public Optional<Tournament> getTournamentByName(String name) {
         return tournamentRepository.getByName(name);
     }
 
@@ -54,17 +54,17 @@ public class TournamentService {
     }
 
     public void deleteTournamentByName(String name) {
-        Tournament tournament = tournamentRepository.getByName(name);
-        if (tournament != null) {
-            deleteTournament(tournament.getId());
+        Optional<Tournament> tournament = tournamentRepository.getByName(name);
+        if (tournament.isPresent()) {
+            deleteTournament(tournament.get().getId());
         }
     }
 
     public void changeStatut(String tournamentName , TournamentStatut statut){
-        Tournament tournament = tournamentRepository.getByName(tournamentName);
-        if(tournament != null){
-            tournament.setStatut(statut);
-            updateTournament(tournament);
+        Optional<Tournament> tournament = tournamentRepository.getByName(tournamentName);
+        if(tournament.isPresent()){
+            tournament.get().setStatut(statut);
+            updateTournament(tournament.orElse(null));
         }
     }
 
@@ -73,22 +73,7 @@ public class TournamentService {
 
     }
 
-    public void addTeamToTournament(String tournamentName, String teamName) {
-        LOGGER.info("Adding team {} to tournament {}", teamName, tournamentName);
-        Tournament tournament = tournamentRepository.getByName(tournamentName) ;
-        if (tournament == null) {
-            throw new IllegalArgumentException("Tournament not found with title: " + tournamentName);
-        }
 
-        Team team = teamRepository.getByName(teamName);
-        if (team == null) {
-            throw new IllegalArgumentException("Team not found with name: " + teamName);
-        }
-        tournament.getTeams().add(team);
-        team.getTournaments().add(tournament);
-        tournamentRepository.update(tournament);
-        teamRepository.update(team);
-    }
 
     public void updateTournamentStatut() {
         LOGGER.info("Updating tournament statuses");
@@ -104,18 +89,42 @@ public class TournamentService {
         }
     }
 
+    public void addTeamToTournament(String tournamentName, String teamName) {
+        LOGGER.info("Adding team {} to tournament {}", teamName, tournamentName);
+
+        // Get the tournament using Optional
+        Optional<Tournament> tournamentOptional = tournamentRepository.getByName(tournamentName);
+        Tournament tournament = tournamentOptional.orElseThrow(() ->
+                new IllegalArgumentException("Tournament not found with title: " + tournamentName));
+
+        // Get the team using Optional
+        Optional<Team> teamOptional = teamRepository.getByName(teamName);
+        Team team = teamOptional.orElseThrow(() ->
+                new IllegalArgumentException("Team not found with name: " + teamName));
+
+        // Add the team to the tournament and vice versa
+        tournament.getTeams().add(team);
+        team.getTournaments().add(tournament);
+
+        // Update the tournament and team
+        tournamentRepository.update(tournament);
+        teamRepository.update(team);
+    }
+
     public void removeTeamFromTournament(String tournamentName, String teamName) {
         LOGGER.info("Removing team {} from tournament {}", teamName, tournamentName);
-        Tournament tournament = tournamentRepository.getByName(tournamentName);
-        if (tournament == null) {
-            throw new IllegalArgumentException("Tournament not found with title: " + tournamentName);
-        }
 
-        Team team = teamRepository.getByName(teamName);
-        if (team == null) {
-            throw new IllegalArgumentException("Team not found with name: " + teamName);
-        }
+        // Get the tournament using Optional
+        Optional<Tournament> tournamentOptional = tournamentRepository.getByName(tournamentName);
+        Tournament tournament = tournamentOptional.orElseThrow(() ->
+                new IllegalArgumentException("Tournament not found with title: " + tournamentName));
 
+        // Get the team using Optional
+        Optional<Team> teamOptional = teamRepository.getByName(teamName);
+        Team team = teamOptional.orElseThrow(() ->
+                new IllegalArgumentException("Team not found with name: " + teamName));
+
+        // Attempt to remove the team from the tournament
         if (tournament.getTeams().remove(team)) {
             team.getTournaments().remove(tournament);
             tournamentRepository.update(tournament);

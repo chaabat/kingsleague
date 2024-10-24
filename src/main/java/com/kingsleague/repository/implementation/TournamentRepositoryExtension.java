@@ -6,8 +6,8 @@ import com.kingsleague.repository.interfaces.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 public class TournamentRepositoryExtension implements TournamentRepository {
@@ -40,41 +40,42 @@ public class TournamentRepositoryExtension implements TournamentRepository {
     }
 
     @Override
-    public Tournament get(Long id) {
-     return   baseRepository.get(id);
+    public Optional<Tournament> get(Long id) {
+     return Optional.ofNullable(baseRepository.get(id).get());
     }
 
     @Override
-    public Tournament getByName(String name) {
-       return  baseRepository.getByName(name);
+    public Optional<Tournament> getByName(String name) {
+       return Optional.ofNullable(baseRepository.getByName(name).get());
     }
 
     @Override
     public int calculateEstimatedDuration(Long tournamentId) {
         LOGGER.info("Calculating advanced estimated duration for tournament with id: {}", tournamentId);
 
-        Tournament tournament = get(tournamentId);
-        if (tournament == null || tournament.getTeams() == null || tournament.getGames() == null || tournament.getGames().isEmpty()) {
-            LOGGER.warn("Tournament, teams, or games not found for id: {}", tournamentId);
+        Optional<Tournament> tournament = get(tournamentId);
+        if (!tournament.isPresent() || tournament.get().getTeams() == null || tournament.get().getTeams().isEmpty() || tournament.get().getGame() == null) {
+            LOGGER.warn("Tournament, teams, or game not found for id: {}", tournamentId);
             return 0;
         }
 
-        int numberOfTeams = tournament.getTeams().size();
+        int numberOfTeams = tournament.get().getTeams().size();
 
         // Assuming all games have the same average duration and difficulty, or use the first game
-        Game firstGame = tournament.getGames().get(0);
+        Game firstGame = tournament.get().getGame();
         int averageMatchDuration = firstGame.getDurationAverageMatch();
         int gameDifficulty = firstGame.getDifficulty();
 
         // Calculate the estimated duration with break and ceremony times
         int estimatedDuration = (numberOfTeams * averageMatchDuration * gameDifficulty)
-                + tournament.getTimePause()
-                + tournament.getTimeCeremony();
+                + tournament.get().getTimePause()
+                + tournament.get().getTimeCeremony();
 
         LOGGER.info("Estimated duration for tournament with id {}: {} minutes", tournamentId, estimatedDuration);
 
         return estimatedDuration;
     }
+
 
 
 }

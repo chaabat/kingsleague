@@ -1,12 +1,12 @@
 package com.kingsleague.controller;
 
 import com.kingsleague.model.Game;
-import com.kingsleague.model.Team;
 import com.kingsleague.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GameController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TournamentController.class);
@@ -18,7 +18,7 @@ public class GameController {
     public List<Game> getAllGames() {
         return gameService.getAllGames();
     }
-    public Game getGameByName(String name) {
+    public Optional<Game>   getGameByName(String name) {
         return gameService.getGameByName(name);
     }
     public void addGame(Game game) {

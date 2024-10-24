@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TeamController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
@@ -20,7 +21,7 @@ public class TeamController {
     public List<Team> getAllTeams() {
         return teamService.getAllTeams();
     }
-    public Team getTeamByName(String name) {
+    public Optional<Team> getTeamByName(String name) {
         return teamService.getTeamByName(name);
     }
     public void addTeam(Team team) {

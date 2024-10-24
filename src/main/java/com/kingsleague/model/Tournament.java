@@ -4,7 +4,6 @@ import com.kingsleague.model.enums.TournamentStatut;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,10 +46,9 @@ public class Tournament {
     @Column(name = "status", nullable = false)
     private TournamentStatut statut;
 
-    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Game> games;
-
-
+    @ManyToOne
+    @JoinColumn(name = "game_id", nullable = false)
+    private Game game;
 
     // Getters and Setters
     public Long getId() {
@@ -125,20 +123,20 @@ public class Tournament {
         this.timeCeremony = timeCeremony;
     }
 
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
-
     public TournamentStatut getStatut() {
         return statut;
     }
 
     public void setStatut(TournamentStatut statut) {
         this.statut = statut;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     // toString method for debugging
@@ -154,9 +152,9 @@ public class Tournament {
                 ", timePause=" + timePause +
                 ", timeCeremony=" + timeCeremony +
                 ", statut=" + statut +
+                ", game=" + (game != null ? game.getName() : "No Game") +
                 '}';
     }
-
 
 
 }

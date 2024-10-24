@@ -9,12 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class GameRepositoryImpl implements GameRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameRepositoryImpl.class);
 
-    private static final String LIST = "SELECT DISTINCT g FROM Game g LEFT JOIN FETCH g.tournament t LEFT JOIN FETCH t.teams";
+    private static final String LIST = "SELECT DISTINCT g FROM Game g LEFT JOIN FETCH g.tournaments t LEFT JOIN FETCH t.teams";
 
     private static final String GET_NAME = "SELECT g FROM Game g WHERE g.name = :name";
 
@@ -50,8 +51,8 @@ entityManager.persist(game);
     @Override
     public void delete(Long id) {
         LOGGER.info("Deleting game with id: {}", id);
-Game game = get(id);
-if (game != null) {
+Optional<Game> game = get(id);
+if (game.isPresent()) {
     entityManager.remove(game);
 }
     }
@@ -64,19 +65,20 @@ if (game != null) {
     }
 
     @Override
-    public  Game get(Long id) {
+    public  Optional<Game> get(Long id) {
         LOGGER.info("Finding game with id: {}", id);
-       return entityManager.find(Game.class,id);
+       return Optional.ofNullable(entityManager.find(Game.class, id));
     }
 
     @Override
-    public Game getByName(String name) {
+    public Optional<Game> getByName(String name) {
         LOGGER.info("Finding game with name: {}", name);
         TypedQuery<Game> query = entityManager.createQuery(GET_NAME, Game.class);
         query.setParameter("name", name);
         List<Game> results = query.getResultList();
-        return results.isEmpty() ? null : results.get(0);
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
+
 
 
 }

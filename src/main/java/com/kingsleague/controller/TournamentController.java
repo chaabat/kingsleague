@@ -1,6 +1,5 @@
 package com.kingsleague.controller;
 
-import com.kingsleague.model.Team;
 import com.kingsleague.model.Tournament;
 import com.kingsleague.model.enums.TournamentStatut;
 import com.kingsleague.service.TournamentService;
@@ -8,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TournamentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TournamentController.class);
@@ -22,7 +22,7 @@ public class TournamentController {
         return tournamentService.getAllTournaments();
     }
 
-    public Tournament getTournamentByName(String name) {
+    public Optional<Tournament> getTournamentByName(String name) {
         return tournamentService.getTournamentByName(name);
     }
 

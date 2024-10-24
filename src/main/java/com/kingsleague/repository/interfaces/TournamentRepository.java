@@ -1,9 +1,11 @@
 package com.kingsleague.repository.interfaces;
 
 
+import com.kingsleague.model.Team;
 import com.kingsleague.model.Tournament;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface TournamentRepository {
@@ -12,7 +14,7 @@ public interface TournamentRepository {
     void update(Tournament tournament);
     void delete(Long id);
     List<Tournament> getAll();
-    Tournament get(Long id);
-    Tournament getByName(String name);
+    Optional<Tournament>  get(Long id);
+    Optional<Tournament>  getByName(String name);
     int calculateEstimatedDuration(Long tournamentId);
 }

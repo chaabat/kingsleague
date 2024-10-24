@@ -11,6 +11,6 @@ public interface GameRepository {
     void update(Game game);
     void delete(Long id);
     List<Game> getAll();
-     Game get(Long id);
-     Game getByName(String name);
+    Optional<Game> get(Long id);
+    Optional<Game> getByName(String name);
 }

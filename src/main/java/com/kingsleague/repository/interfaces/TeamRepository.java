@@ -12,6 +12,6 @@ public interface TeamRepository {
     void update(Team team);
     void delete(Long id);
     List<Team> getAll();
-    Team get(Long id);
-    Team getByName(String name);
+    Optional<Team> get(Long id);
+    Optional<Team> getByName(String name);
 }
