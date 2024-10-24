@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8473b76b-8a2e-4f3a-b586-4d0b4d8b559e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/TeamRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/TeamRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/TeamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/interfaces/TeamRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/GameService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +116,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729502054610</updated>
       <workItem from="1729674922354" duration="3428000" />
-      <workItem from="1729679522000" duration="8658000" />
+      <workItem from="1729679522000" duration="10695000" />
     </task>
     <servers />
   </component>
