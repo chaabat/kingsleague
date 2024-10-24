@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8473b76b-8a2e-4f3a-b586-4d0b4d8b559e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TeamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/TeamService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/model/Team.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/service/PlayerService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +121,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729502054610</updated>
       <workItem from="1729674922354" duration="3428000" />
-      <workItem from="1729679522000" duration="14641000" />
+      <workItem from="1729679522000" duration="16811000" />
     </task>
     <servers />
   </component>

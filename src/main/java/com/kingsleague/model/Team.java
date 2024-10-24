@@ -2,6 +2,7 @@ package com.kingsleague.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,20 +17,24 @@ public class Team {
     @Column(name = "name", nullable = false)
     private String name;
 
+    // Use List instead of Set to avoid duplicates, and initialize as ArrayList
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(
             name = "team_tournaments",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "tournament_id")
     )
-    private List<Tournament> tournaments;
+    private List<Tournament> tournaments = new ArrayList<>();
 
     @Column(name = "ranking")
     private int ranking;
 
-
+    // Many-to-Many relationship with Game, initialize as ArrayList
+    @ManyToMany(mappedBy = "teams")
+    private List<Game> games = new ArrayList<>();
 
     // Getters and Setters
     public Long getId() {
@@ -72,14 +77,22 @@ public class Team {
         this.ranking = ranking;
     }
 
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
+
     // toString method for debugging
     @Override
     public String toString() {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", players=" + players +
-                ", tournaments=" + tournaments +
+                ", playersCount=" + (players != null ? players.size() : 0) +
+                ", tournamentsCount=" + (tournaments != null ? tournaments.size() : 0) +
                 ", ranking=" + ranking +
                 '}';
     }

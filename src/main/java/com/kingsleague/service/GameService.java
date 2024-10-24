@@ -1,6 +1,7 @@
 package com.kingsleague.service;
 
 import com.kingsleague.model.Game;
+import com.kingsleague.model.Team;
 import com.kingsleague.repository.interfaces.GameRepository;
 import com.kingsleague.repository.interfaces.TeamRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,48 @@ public class GameService {
 
     public void deleteGame(Long id) {
         gameRepository.delete(id);
+    }
+
+    public void deleteGameByName(String name) {
+        Game game = gameRepository.getByName(name);
+        if (game != null) {
+            deleteGame(game.getId());
+        }
+    }
+
+    public void addTeamToGame(String gameName, String teamName){
+        Game game = gameRepository.getByName(gameName);
+        if (game == null) {
+            throw new IllegalArgumentException("Game not found with name: " + gameName);
+        }
+
+        Team team = teamRepository.getByName(teamName);
+        if (team == null) {
+            throw new IllegalArgumentException("Team not found with name: " + teamName);
+        }
+
+        game.getTeams().add(team);
+        team.getGames().add(game);
+        gameRepository.update(game);
+        teamRepository.update(team);
+    }
+
+    public void removeTeamFromGame(String gameName, String teamName) {
+        Game game = gameRepository.getByName(gameName);
+        if (game == null) {
+            throw new IllegalArgumentException("Game not found with name: " + gameName);
+        }
+
+        Team team = teamRepository.getByName(teamName);
+        if (team == null) {
+            throw new IllegalArgumentException("Team not found with name: " + teamName);
+        }
+
+        if (game.getTeams().remove(team)) {
+            team.getGames().remove(game);
+            gameRepository.update(game);
+            teamRepository.update(team);
+        }
     }
 
 

@@ -38,4 +38,10 @@ public class PlayerService {
     public void deletePlayer(Long id) {
         playerRepository.delete(id);
     }
+    public void deletePlayerByUsername(String username) {
+        Player player = playerRepository.getByUsername(username);
+        if (player != null) {
+            deletePlayer(player.getId());
+        }
+    }
 }

@@ -1,9 +1,13 @@
 package com.kingsleague.model;
 
+import com.kingsleague.repository.interfaces.GameRepository;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "game")
@@ -30,9 +34,27 @@ public class Game {
     @Max(value = 180, message = "Average match duration cannot exceed 180 minutes")
     private int durationAverageMatch;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tournament_id", nullable = false)
-    private Tournament tournament;
+    @OneToMany(mappedBy = "game")
+    private Set<Tournament> tournaments = new HashSet<>();
+
+    public Set<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
+
+    public Set<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(Set<Tournament> tournaments) {
+        this.tournaments = tournaments;
+    }
+
+    @ManyToMany
+    private Set<Team> teams = new HashSet<>();
 
     // Getters and Setters
     public Long getId() {
@@ -66,22 +88,16 @@ public class Game {
         this.durationAverageMatch = durationAverageMatch;
     }
 
-    public Tournament getTournament() {
-        return tournament;
-    }
 
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-
-    // toString method for debugging
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", difficulty='" + difficulty + '\'' +
+                ", name='" + name + '\'' +
+                ", difficulty=" + difficulty +
                 ", durationAverageMatch=" + durationAverageMatch +
-                ", tournament=" + (tournament != null ? tournament.getName() : "No tournament") +
+                ", tournaments=" + tournaments +
+                ", teams=" + teams +
                 '}';
     }
 }
