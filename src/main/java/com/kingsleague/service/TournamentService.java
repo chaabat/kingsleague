@@ -90,7 +90,7 @@ public class TournamentService {
         teamRepository.update(team);
     }
 
-    public void updateTournamentStatuses() {
+    public void updateTournamentStatut() {
         LOGGER.info("Updating tournament statuses");
         List<Tournament> tournaments = getAllTournaments();
         for (Tournament tournament : tournaments) {
