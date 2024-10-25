@@ -1,9 +1,6 @@
 package com.kingsleague.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,39 +12,28 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Game name cannot be null")
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "difficulty", nullable = false)
-    @Min(value = 1, message = "Difficulty must be at least 1")
-    @Max(value = 6, message = "Difficulty cannot exceed 6")
+    @Column(name = "difficulty")
     private int difficulty;
 
-    @Column(name = "duration_average_match", nullable = false)
-    @Min(value = 1, message = "Average match duration must be at least 1 minute")
-    @Max(value = 180, message = "Average match duration cannot exceed 180 minutes")
+    @Column(name = "duration_average_match")
     private int durationAverageMatch;
 
-    // One game can be part of many tournaments
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "game_tournament",
-            joinColumns = @JoinColumn(name = "game_id"),
-            inverseJoinColumns = @JoinColumn(name = "tournament_id")
-    )
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Tournament> tournaments = new HashSet<>();
 
-    // Many-to-Many relationship with Team
     @ManyToMany
     @JoinTable(
-            name = "game_teams",
-            joinColumns = @JoinColumn(name = "game_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
+        name = "game_team",
+        joinColumns = @JoinColumn(name = "game_id"),
+        inverseJoinColumns = @JoinColumn(name = "team_id")
     )
     private Set<Team> teams = new HashSet<>();
 
-    // Getters and Setters
+    // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -101,7 +87,8 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                // Don't include teams and tournaments to avoid circular references
+                ", difficulty=" + difficulty +
+                ", durationAverageMatch=" + durationAverageMatch +
                 '}';
     }
 }

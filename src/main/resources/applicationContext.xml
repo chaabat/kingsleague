@@ -51,11 +51,11 @@
 
 
     <!-- Repositories -->
-    <bean id="playerRepository" class="com.kingsleague.repository.implementation.PlayerRepositoryImpl" factory-method="getInstance">
+    <bean id="playerRepository" class="com.kingsleague.repository.implementation.PlayerRepositoryImpl">
         <property name="entityManager" ref="entityManager" />
     </bean>
 
-    <bean id="teamRepository" class="com.kingsleague.repository.implementation.TeamRepositoryImpl" factory-method="getInstance">
+    <bean id="teamRepository" class="com.kingsleague.repository.implementation.TeamRepositoryImpl">
         <property name="entityManager" ref="entityManager" />
     </bean>
 

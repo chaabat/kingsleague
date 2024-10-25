@@ -4,8 +4,8 @@ import com.kingsleague.model.Tournament;
 import com.kingsleague.repository.interfaces.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -49,12 +49,13 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 
     @Override
     public void delete(Long id) {
-        LOGGER.info("Deleting tournament: {}", id);
-        Optional<Tournament> tournament = get(id);
-        if (tournament.isPresent()) {
+        LOGGER.info("Deleting tournament with id: {}", id);
+        Tournament tournament = entityManager.find(Tournament.class, id);
+        if (tournament != null) {
             entityManager.remove(tournament);
+        } else {
+            LOGGER.warn("Tournament not found with id: {}", id);
         }
-
     }
 
     @Override
@@ -73,10 +74,13 @@ public class TournamentRepositoryImpl implements TournamentRepository {
     @Override
     public Optional<Tournament> getByName(String name) {
         LOGGER.info("Finding tournament with name: {}", name);
-        TypedQuery<Tournament> query = entityManager.createQuery(GET_NAME, Tournament.class);
+        TypedQuery<Tournament> query = entityManager.createQuery( GET_NAME, Tournament.class);
         query.setParameter("name", name);
-        List<Tournament> tournaments = query.getResultList();
-        return tournaments.isEmpty() ? null : Optional.ofNullable(tournaments.get(0));
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

@@ -1,24 +1,36 @@
 package com.kingsleague.service;
 
-
 import com.kingsleague.model.Player;
 import com.kingsleague.model.Team;
 import com.kingsleague.repository.interfaces.PlayerRepository;
 import com.kingsleague.repository.interfaces.TeamRepository;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
 public class TeamService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeamService.class);
     private TeamRepository teamRepository;
     private PlayerRepository playerRepository;
 
+    // Default constructor
+    public TeamService() {}
+
+    // Constructor with repositories
+    public TeamService(TeamRepository teamRepository, PlayerRepository playerRepository) {
+        this.teamRepository = teamRepository;
+        this.playerRepository = playerRepository;
+    }
+
+    // Setter for teamRepository
     public void setTeamRepository(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
     }
 
+    // Setter for playerRepository
     public void setPlayerRepository(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
@@ -33,7 +45,8 @@ public class TeamService {
     }
 
     public Optional<Team> getTeamByName(String name) {
-        return Optional.ofNullable(teamRepository.getByName(name).orElse(null));
+        LOGGER.info("Fetching team with name: {}", name);
+        return teamRepository.getByName(name);
     }
 
     public void addTeam(Team team) {
@@ -86,5 +99,8 @@ public class TeamService {
         }
     }
 
-
+    public void saveTeam(Team team) {
+        LOGGER.info("Saving team: {}", team.getName());
+        teamRepository.add(team);
+    }
 }

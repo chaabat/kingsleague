@@ -536,35 +536,23 @@ public class PlayerDisplay {
     }
 
     private void updateGame() {
-        String name = getValidStringInput("Enter game name to update: ", 3, 50);
-        try {
-            Optional<Game> gameOptional = gameController.getGameByName(name);
-            if (!gameOptional.isPresent()) {  // Changed from isEmpty() to !isPresent()
-                System.out.println("Game not found.");
-                return;
-            }
+        System.out.print("Enter game name: ");
+        String gameName = scanner.nextLine();
+        Optional<Game> gameOptional = gameController.getGameByName(gameName);
+        if (gameOptional.isPresent()) {
             Game game = gameOptional.get();
-            System.out.println("Current game details:");
-            System.out.println("Name: " + game.getName());
-            System.out.println("Difficulty: " + game.getDifficulty());
-            System.out.println("Average Match Duration: " + game.getDurationAverageMatch());
-            System.out.println("Enter new details (press enter to keep current value):");
-            String newName = getValidStringInput("New name (3-50 characters): ", 3, 50, true);
-            if (!newName.isEmpty()) {
-                game.setName(newName);
-            }
-            String difficultyStr = getValidStringInput("New difficulty (1-10): ", 1, 2, true);
-            if (!difficultyStr.isEmpty()) {
-                game.setDifficulty(Integer.parseInt(difficultyStr));
-            }
-            String durationStr = getValidStringInput("New average match duration (1-300 minutes): ", 1, 3, true);
-            if (!durationStr.isEmpty()) {
-                game.setDurationAverageMatch(Integer.parseInt(durationStr));
-            }
+            System.out.print("Enter new difficulty (1-10): ");
+            int difficulty = Integer.parseInt(scanner.nextLine());
+            System.out.print("Enter new average match duration (in minutes): ");
+            int durationAverageMatch = Integer.parseInt(scanner.nextLine());
+            
+            game.setDifficulty(difficulty);
+            game.setDurationAverageMatch(durationAverageMatch);
+            
             gameController.updateGame(game);
             System.out.println("Game updated successfully.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+        } else {
+            System.out.println("Game not found.");
         }
     }
 

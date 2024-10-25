@@ -2,8 +2,10 @@ package com.kingsleague.service;
 
 import com.kingsleague.model.Game;
 import com.kingsleague.model.Team;
+import com.kingsleague.model.Tournament;
 import com.kingsleague.repository.interfaces.GameRepository;
 import com.kingsleague.repository.interfaces.TeamRepository;
+import com.kingsleague.repository.interfaces.TournamentRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +20,12 @@ public class GameService {
 
     private GameRepository gameRepository;
     private TeamRepository teamRepository;
+    private TournamentRepository tournamentRepository;
 
-    public GameService(GameRepository gameRepository, TeamRepository teamRepository) {
+    public GameService(GameRepository gameRepository, TeamRepository teamRepository, TournamentRepository tournamentRepository) {
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
+        this.tournamentRepository = tournamentRepository;
     }
 
     public void setGameRepository(GameRepository gameRepository) {
@@ -43,13 +47,7 @@ public class GameService {
 
     public Optional<Game> getGameByName(String name) {
         LOGGER.info("Fetching game with name: {}", name);
-        Optional<Game> gameOptional = gameRepository.getByName(name);
-        if (gameOptional.isPresent()) {
-            Game game = gameOptional.get();
-            // Initialize the teams collection
-            game.getTeams().size(); // This will force initialization
-        }
-        return gameOptional;
+        return gameRepository.getByName(name);
     }
 
     public void addGame(Game game) {
@@ -57,7 +55,8 @@ public class GameService {
     }
 
     public void updateGame(Game game) {
-        gameRepository.update(game);
+        LOGGER.info("Updating game: {}", game.getName());
+        gameRepository.add(game);
     }
 
     public void deleteGame(Long id) {
@@ -82,10 +81,9 @@ public class GameService {
         game.getTeams().add(team);
         team.getGames().add(game);
 
-        LOGGER.info("Updating game in repository");
-        gameRepository.update(game);
-        LOGGER.info("Updating team in repository");
-        teamRepository.update(team);
+        LOGGER.info("Updating game and team in repository");
+        gameRepository.add(game);
+        teamRepository.add(team);
         LOGGER.info("Team successfully added to game");
     }
 
@@ -110,6 +108,20 @@ public class GameService {
         }
     }
 
+    public void addTournamentToGame(String gameName, String tournamentName) {
+        LOGGER.info("Adding tournament '{}' to game '{}'", tournamentName, gameName);
+        Game game = getGameByName(gameName)
+            .orElseThrow(() -> new IllegalArgumentException("Game not found: " + gameName));
+        Tournament tournament = tournamentRepository.getByName(tournamentName)
+            .orElseThrow(() -> new IllegalArgumentException("Tournament not found: " + tournamentName));
+
+        game.getTournaments().add(tournament);
+        tournament.setGame(game);
+
+        LOGGER.info("Updating game and tournament in repository");
+        gameRepository.add(game);
+        LOGGER.info("Tournament successfully added to game");
+    }
 
 }
 

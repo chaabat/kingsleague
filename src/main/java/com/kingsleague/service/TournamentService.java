@@ -54,9 +54,15 @@ public class TournamentService {
     }
 
     public void deleteTournamentByName(String name) {
-        Optional<Tournament> tournament = tournamentRepository.getByName(name);
-        if (tournament.isPresent()) {
-            deleteTournament(tournament.get().getId());
+        LOGGER.info("Deleting tournament with name: {}", name);
+        Optional<Tournament> tournamentOptional = tournamentRepository.getByName(name);
+        if (tournamentOptional.isPresent()) {
+            Tournament tournament = tournamentOptional.get();
+            tournamentRepository.delete(tournament.getId());
+            LOGGER.info("Tournament deleted successfully");
+        } else {
+            LOGGER.warn("Tournament not found: {}", name);
+            throw new IllegalArgumentException("Tournament not found: " + name);
         }
     }
 

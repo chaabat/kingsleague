@@ -5,7 +5,8 @@ import com.kingsleague.model.enums.TournamentStatut;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tournament")
@@ -19,19 +20,24 @@ public class Tournament {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "date_start", nullable = false)
+    @Column(name = "date_start")
     @Temporal(TemporalType.DATE)
     private Date dateStart;
 
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
     @Column(name = "number_spectators")
     private int numberSpectators;
 
-    @ManyToMany(mappedBy = "tournaments")
-    private List<Team> teams;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "tournament_team",
+        joinColumns = @JoinColumn(name = "tournament_id"),
+        inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
+    private Set<Team> teams = new HashSet<>();
 
     @Column(name = "estimated_duration")
     private int estimatedDuration;
@@ -43,14 +49,15 @@ public class Tournament {
     private int timeCeremony;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private TournamentStatut statut;
 
-    @ManyToOne
-    @JoinColumn(name = "game_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_id")
     private Game game;
 
-    // Getters and Setters
+    // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -91,11 +98,11 @@ public class Tournament {
         this.numberSpectators = numberSpectators;
     }
 
-    public List<Team> getTeams() {
+    public Set<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<Team> teams) {
+    public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
 
@@ -155,6 +162,4 @@ public class Tournament {
                 ", game=" + (game != null ? game.getName() : "No Game") +
                 '}';
     }
-
-
 }
