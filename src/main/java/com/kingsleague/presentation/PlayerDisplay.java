@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 public class PlayerDisplay {
 
-    private static final Logger logger = LoggerFactory.getLogger(PlayerDisplay.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerDisplay.class);
 
     private PlayerController playerController;
     private TeamController teamController;
@@ -279,7 +279,7 @@ public class PlayerDisplay {
             teamController.addPlayerToTeam(teamName, playerUsername);
             System.out.println("Player added to team successfully.");
         } catch (IllegalArgumentException e) {
-            logger.error("Failed to add player to team: {}", e.getMessage());
+            LOGGER.error("Failed to add player to team: {}", e.getMessage());
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -385,7 +385,7 @@ public class PlayerDisplay {
             tournamentController.addTournament(tournament);
             System.out.println("Tournament added successfully.");
         } catch (IllegalArgumentException e) {
-            logger.error("Failed to add tournament: {}", e.getMessage());
+            LOGGER.error("Failed to add tournament: {}", e.getMessage());
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -575,20 +575,27 @@ public class PlayerDisplay {
     }
 
     private void addTeamToGame() {
-        String gameName = getStringInput("Enter game name: ");
-        String teamName = getStringInput("Enter team name to add: ");
+        System.out.print("Enter game name: ");
+        String gameName = scanner.nextLine();
+        System.out.print("Enter team name to add: ");
+        String teamName = scanner.nextLine();
+
         try {
+            if (gameController == null) {
+                LOGGER.error("GameController is null");
+                throw new IllegalStateException("GameController is not initialized");
+            }
             gameController.addTeamToGame(gameName, teamName);
             System.out.println("Team added to game successfully.");
-        } catch (IllegalArgumentException e) {
-            logger.error("Failed to add team to game: {}", e.getMessage());
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("Error: " + e.getMessage());
-        } catch (NullPointerException e) {
-            logger.error("Failed to add team to game: Unexpected null value", e);
-            System.out.println("Error: Unexpected error occurred. The game or team might not exist.");
+            LOGGER.error("Failed to add team to game: {}", e.getMessage());
+        } catch (RuntimeException e) {
+            System.out.println("Error: An unexpected error occurred while adding the team to the game.");
+            LOGGER.error("Failed to add team to game", e);
         } catch (Exception e) {
-            logger.error("Unexpected error while adding team to game", e);
-            System.out.println("An unexpected error occurred. Please try again later.");
+            System.out.println("Error: An unexpected error occurred. Please try again later.");
+            LOGGER.error("Unexpected error while adding team to game", e);
         }
     }
 

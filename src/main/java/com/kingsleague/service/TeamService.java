@@ -33,7 +33,7 @@ public class TeamService {
     }
 
     public Optional<Team> getTeamByName(String name) {
-        return teamRepository.getByName(name);
+        return Optional.ofNullable(teamRepository.getByName(name).orElse(null));
     }
 
     public void addTeam(Team team) {

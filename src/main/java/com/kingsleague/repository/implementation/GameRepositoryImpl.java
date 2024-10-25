@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.NoResultException;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class GameRepositoryImpl implements GameRepository {
 
     private static final String LIST = "SELECT DISTINCT g FROM Game g LEFT JOIN FETCH g.tournaments t LEFT JOIN FETCH t.teams";
 
-    private static final String GET_NAME = "SELECT g FROM Game g WHERE g.name = :name";
+    private static final String GET_NAME = "SELECT g FROM Game g LEFT JOIN FETCH g.teams WHERE g.name = :name";
 
     private static GameRepositoryImpl instance;
     private EntityManager entityManager;
@@ -73,10 +74,14 @@ if (game.isPresent()) {
     @Override
     public Optional<Game> getByName(String name) {
         LOGGER.info("Finding game with name: {}", name);
-        TypedQuery<Game> query = entityManager.createQuery(GET_NAME, Game.class);
-        query.setParameter("name", name);
-        List<Game> results = query.getResultList();
-        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+        try {
+            Game game = entityManager.createQuery(GET_NAME , Game.class)
+                .setParameter("name", name)
+                .getSingleResult();
+            return Optional.of(game);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
 

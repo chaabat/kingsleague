@@ -30,7 +30,12 @@ public class Game {
     private int durationAverageMatch;
 
     // One game can be part of many tournaments
-    @OneToMany(mappedBy = "game")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "game_tournament",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "tournament_id")
+    )
     private Set<Tournament> tournaments = new HashSet<>();
 
     // Many-to-Many relationship with Team
@@ -96,10 +101,7 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", difficulty=" + difficulty +
-                ", durationAverageMatch=" + durationAverageMatch +
-                ", tournaments=" + tournaments +
-                ", teams=" + teams +
+                // Don't include teams and tournaments to avoid circular references
                 '}';
     }
 }
