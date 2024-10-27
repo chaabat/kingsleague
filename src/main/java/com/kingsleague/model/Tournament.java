@@ -1,63 +1,93 @@
 package com.kingsleague.model;
 
-import com.kingsleague.model.enums.TournamentStatut;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
+import com.kingsleague.model.enums.TournamentStatut;
+
 @Entity
-@Table(name = "tournament")
+@Table(name = "Tournament")
 public class Tournament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Tournament name should not be null")
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "date_start")
-    @Temporal(TemporalType.DATE)
-    private Date dateStart;
-
-    @Column(name = "end_date")
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
-
-    @Column(name = "number_spectators")
-    private int numberSpectators;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "tournament_team",
-        joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
-    private Set<Team> teams = new HashSet<>();
-
-    @Column(name = "estimated_duration")
-    private int estimatedDuration;
-
-    @Column(name = "time_pause")
-    private int timePause;
-
-    @Column(name = "time_ceremony")
-    private int timeCeremony;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private TournamentStatut statut;
+    @Column(name = "title")
+    @NotNull(message = "Title cannot be null")
+    @Size(min = 1, max = 100, message = "Title must be between 1 and 100 characters")
+    private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
+    @JoinColumn(name = "GAME_ID")
+    @NotNull(message = "Game cannot be null")
     private Game game;
 
-    // Getters and setters
+    @Temporal(TemporalType.DATE)
+    @NotNull(message = "Start date cannot be null")
+    @Future(message = "Start date must be in the future")
+    private Date startDate;
 
+    @Temporal(TemporalType.DATE)
+    @NotNull(message = "End date cannot be null")
+    @Future(message = "End date must be in the future")
+    @PastOrPresent(message = "End date must not be in the past")
+    private Date endDate;
+
+    @Min(value = 0, message = "Spectator count cannot be negative")
+    private int spectatorCount;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tournament_team",
+            joinColumns = @JoinColumn(name = "tournament_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
+    @NotEmpty(message = "Tournament must have at least one team")
+    private Set<Team> teams = new HashSet<>();
+
+    @Positive(message = "Estimated duration must be positive")
+    @Min(value = 0, message = "Estimated duration cannot be negative")
+    private int estimatedDuration;
+
+    @Positive(message = "Match break time must be positive")
+    @Min(value = 0, message = "Match break time cannot be negative")
+    private int matchBreakTime;
+
+    @Positive(message = "Ceremony time must be positive")
+    @Min(value = 0, message = "Ceremony time cannot be negative")
+    private int ceremonyTime;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Tournament status cannot be null")
+    private TournamentStatut status;
+
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -66,20 +96,28 @@ public class Tournament {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Date getDateStart() {
-        return dateStart;
+    public Game getGame() {
+        return this.game;
     }
 
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
+    public void setGame(Game game2) {
+        this.game = game2;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Date getEndDate() {
@@ -90,12 +128,12 @@ public class Tournament {
         this.endDate = endDate;
     }
 
-    public int getNumberSpectators() {
-        return numberSpectators;
+    public int getSpectatorCount() {
+        return spectatorCount;
     }
 
-    public void setNumberSpectators(int numberSpectators) {
-        this.numberSpectators = numberSpectators;
+    public void setSpectatorCount(int spectatorCount) {
+        this.spectatorCount = spectatorCount;
     }
 
     public Set<Team> getTeams() {
@@ -114,52 +152,45 @@ public class Tournament {
         this.estimatedDuration = estimatedDuration;
     }
 
-    public int getTimePause() {
-        return timePause;
+    public int getMatchBreakTime() {
+        return matchBreakTime;
     }
 
-    public void setTimePause(int timePause) {
-        this.timePause = timePause;
+    public void setMatchBreakTime(int matchBreakTime) {
+        this.matchBreakTime = matchBreakTime;
     }
 
-    public int getTimeCeremony() {
-        return timeCeremony;
+    public int getCeremonyTime() {
+        return ceremonyTime;
     }
 
-    public void setTimeCeremony(int timeCeremony) {
-        this.timeCeremony = timeCeremony;
+    public void setCeremonyTime(int ceremonyTime) {
+        this.ceremonyTime = ceremonyTime;
     }
 
-    public TournamentStatut getStatut() {
-        return statut;
+    public TournamentStatut getStatus() {
+        return status;
     }
 
-    public void setStatut(TournamentStatut statut) {
-        this.statut = statut;
+    public void setStatus(TournamentStatut status) {
+        this.status = status;
     }
 
-    public Game getGame() {
-        return game;
+    public void updateStatus() {
+        Date currentDate = new Date();
+        if (status == TournamentStatut.CANCELED) {
+            return;
+        }
+        if (currentDate.before(startDate)) {
+            status = TournamentStatut.SCHEDULED;
+        } else if (currentDate.after(startDate) && currentDate.before(endDate)) {
+            status = TournamentStatut.IN_PROGRESS;
+        } else if (currentDate.after(endDate)) {
+            status = TournamentStatut.COMPLETED;
+        }
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    // toString method for debugging
-    @Override
-    public String toString() {
-        return "Tournament{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", dateStart=" + dateStart +
-                ", endDate=" + endDate +
-                ", numberSpectators=" + numberSpectators +
-                ", estimatedDuration=" + estimatedDuration +
-                ", timePause=" + timePause +
-                ", timeCeremony=" + timeCeremony +
-                ", statut=" + statut +
-                ", game=" + (game != null ? game.getName() : "No Game") +
-                '}';
+    public void cancel() {
+        this.status = TournamentStatut.CANCELED;
     }
 }

@@ -59,14 +59,14 @@
         <property name="entityManager" ref="entityManager" />
     </bean>
 
-    <bean id="tournamentRepository" class="com.kingsleague.repository.implementation.TournamentRepositoryImpl" factory-method="getInstance">
-        <property name="entityManager" ref="entityManager" />
+    <bean id="tournamentRepository" class="com.kingsleague.repository.implementation.TournamentRepositoryImpl">
+        <property name="entityManager" ref="entityManager"/>
     </bean>
 
     <bean id="tournamentRepositoryExtension" class="com.kingsleague.repository.implementation.TournamentRepositoryExtension"/>
 
-    <bean id="gameRepository" class="com.kingsleague.repository.implementation.GameRepositoryImpl" factory-method="getInstance">
-        <property name="entityManager" ref="entityManager" />
+    <bean id="gameRepository" class="com.kingsleague.repository.implementation.GameRepositoryImpl">
+        <property name="entityManager" ref="entityManager"/>
     </bean>
     <!-- Services -->
     <bean id="playerService" class="com.kingsleague.service.PlayerService">
@@ -80,7 +80,7 @@
 
     <bean id="tournamentService" class="com.kingsleague.service.TournamentService">
         <property name="tournamentRepository" ref="tournamentRepository"/>
-        <property name="teamRepository" ref="teamRepository"/>
+        <property name="gameRepository" ref="gameRepository"/>
     </bean>
     <bean id="gameService" class="com.kingsleague.service.GameService">
         <property name="gameRepository" ref="gameRepository"/>

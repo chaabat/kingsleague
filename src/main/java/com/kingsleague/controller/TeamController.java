@@ -19,26 +19,38 @@ public class TeamController {
     }
 
     public List<Team> getAllTeams() {
-        return teamService.getAllTeams();
+        LOGGER.info("Getting all teams");
+        return teamService.getAll();
     }
+
     public Optional<Team> getTeamByName(String name) {
+        LOGGER.info("Getting team by name: {}", name);
         return teamService.getTeamByName(name);
     }
-    public void addTeam(Team team) {
-        teamService.addTeam(team);
+
+    public void createTeam(Team team) {
+        LOGGER.info("Creating new team: {}", team.getName());
+        teamService.add(team);
     }
+
     public void updateTeam(Team team) {
-        teamService.updateTeam(team);
+        LOGGER.info("Updating team: {}", team.getName());
+        teamService.update(team);
     }
-    public void deleteTeamByName(String name ) {
+
+    public void deleteTeamByName(String name) {
+        LOGGER.info("Deleting team by name: {}", name);
         teamService.deleteTeamByName(name);
     }
 
-    public void addPlayerToTeam(String playerName, String playerUsername) {
-        teamService.addPlayerToTeam(playerName, playerUsername);
+    public void addPlayerToTeam(String teamName, String playerUsername) {
+        LOGGER.info("Adding player {} to team {}", playerUsername, teamName);
+        teamService.addPlayerToTeam(teamName, playerUsername);
     }
 
-    public void removePlayerFromTeam(String playerName, String playerUsername) {
-        teamService.removePlayerFromTeam(playerName, playerUsername);
+    public void removePlayerFromTeam(String teamName, String playerUsername) {
+        LOGGER.info("Removing player {} from team {}", playerUsername, teamName);
+        teamService.removePlayerFromTeam(teamName, playerUsername);
     }
 }
+

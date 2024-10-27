@@ -17,19 +17,23 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    public List<Player> getAllPlayers(){
-        return playerService.getAllPlayers();
+    public List<Player> getAllPlayers() {
+        return playerService.getAll();
     }
-    public Optional<Player> getPlayerByUsername(String username){
+
+    public Optional<Player> getPlayerByUsername(String username) {
         return playerService.getPlayerByUsername(username);
     }
-    public void addPlayer(Player player){
-        playerService.addPlayer(player);
+
+    public void createPlayer(Player player) {
+        playerService.add(player);
     }
-    public void updatePlayer(Player player){
-        playerService.updatePlayer(player);
+
+    public void updatePlayer(Player player) {
+        playerService.update(player);
     }
-    public void deletePlayerByUsername(String username){
+
+    public void deletePlayerByUsername(String username) {
         playerService.deletePlayerByUsername(username);
     }
 }

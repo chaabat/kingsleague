@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kingsleague</groupId>
-    <artifactId>esport-tournament-management</artifactId>
+    <artifactId>kingsleague-tournament-management</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>KINGSLEAGUE</name>
 
@@ -48,6 +48,7 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
+       
 
         <!-- SLF4J for Logging -->
         <dependency>
@@ -88,12 +89,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>5.3.30</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -1,7 +1,5 @@
 package com.kingsleague.repository.interfaces;
-
-
-import com.kingsleague.model.Team;
+ 
 import com.kingsleague.model.Tournament;
 
 import java.util.List;

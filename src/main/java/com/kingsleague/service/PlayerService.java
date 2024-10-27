@@ -9,39 +9,46 @@ import java.util.Optional;
 
 @Transactional
 public class PlayerService {
+    
     private PlayerRepository playerRepository;
 
     public void setPlayerRepository(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
 
-    public Optional<Player> getPlayerById(Long id) {
+   
+    public Optional<Player> get(Long id) {
         return playerRepository.get(id);
     }
 
+      
     @Transactional(readOnly = true)
-    public List<Player> getAllPlayers() {
+    public List<Player> getAll() {
         return playerRepository.getAll();
     }
-
-    public Optional<Player> getPlayerByUsername(String username) {
-        return playerRepository.getByUsername(username);
-    }
-
-    public void addPlayer(Player player) {
+ 
+    public void add(Player player) {
         playerRepository.add(player);
     }
 
-    public void updatePlayer(Player player) {
+    
+    public void update(Player player) {
         playerRepository.update(player);
     }
-
-    public void deletePlayer(Long id) {
+ 
+    public void delete(Long id) {
         playerRepository.delete(id);
     }
 
+   
+    public Optional<Player> getPlayerByUsername(String username) {
+        return playerRepository.getByUsername(username);
+    }
+ 
     public void deletePlayerByUsername(String username) {
-        Optional<Player> optionalPlayer = playerRepository.getByUsername(username);
-        optionalPlayer.ifPresent(player -> deletePlayer(player.getId()));
+        Optional<Player> player = getPlayerByUsername(username);
+        if (player != null) {
+            delete(player.get().getId());
+        }
     }
 }

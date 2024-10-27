@@ -1,3 +1,4 @@
+
 package com.kingsleague.presentation;
 
 import org.slf4j.Logger;
@@ -9,17 +10,22 @@ public class Display {
     private static final Logger LOGGER = LoggerFactory.getLogger(Display.class);
 
     public static void main(String[] args) {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.info("Starting E-Sports Tournament Management System");
+        LOGGER.info("Starting Kings League Tournament Management System");
 
         org.h2.tools.Server h2WebServer = context.getBean("h2WebServer", org.h2.tools.Server.class);
         String h2ConsoleUrl = h2WebServer.getURL();
         LOGGER.info("H2 Console URL: {}", h2ConsoleUrl);
-
         // Initialize and start the PlayerDisplay
-        PlayerDisplay playerDisplay = new PlayerDisplay();
-        playerDisplay.start(); // Start the player management functionality
+        ConsoleInterface consoleInterface = new ConsoleInterface();
+        consoleInterface.start(); // Start the player management functionality
 
-        LOGGER.info("E-Sports Tournament Management System terminated");
+        LOGGER.info("Kings League Tournament Management System terminated");
+
+
+
+
+
     }
 }
