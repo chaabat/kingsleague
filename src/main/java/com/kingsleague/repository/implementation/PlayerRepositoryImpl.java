@@ -22,7 +22,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     private static PlayerRepositoryImpl instance;
     private EntityManager entityManager;
 
-    private PlayerRepositoryImpl() {
+    public PlayerRepositoryImpl() {
         // Private constructor to prevent instantiation
     }
 
