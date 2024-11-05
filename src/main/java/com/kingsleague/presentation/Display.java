@@ -17,10 +17,8 @@ public class Display {
         org.h2.tools.Server h2WebServer = context.getBean("h2WebServer", org.h2.tools.Server.class);
         String h2ConsoleUrl = h2WebServer.getURL();
         LOGGER.info("H2 Console URL: {}", h2ConsoleUrl);
-        // Initialize and start the PlayerDisplay
         ConsoleInterface consoleInterface = new ConsoleInterface();
-        consoleInterface.start(); // Start the player management functionality
-
+        consoleInterface.start(); 
         LOGGER.info("Kings League Tournament Management System terminated");
 
 

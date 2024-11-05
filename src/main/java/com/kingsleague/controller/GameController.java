@@ -20,27 +20,27 @@ public class GameController {
     }
 
     public List<Game> getAllGames() {
-        LOGGER.info("Getting all games");
+      //  LOGGER.info("Getting all games");
         return gameService.getAll();
     }
 
     public Optional<Game> getGameByTitle(String title) {
-        LOGGER.info("Getting game by name: {}", title);
+       // LOGGER.info("Getting game by name: {}", title);
         return gameService.getGameByTitle(title);
     }
 
     public void createGame(Game game) {
-        LOGGER.info("Creating new game: {}", game.getName());
+       // LOGGER.info("Creating new game: {}", game.getName());
         gameService.add(game);
     }
 
     public void updateGame(Game game) {
-        LOGGER.info("Updating game: {}", game.getName());
+       // LOGGER.info("Updating game: {}", game.getName());
         gameService.update(game);
     }
 
     public void deleteGameByName(String name) {
-        LOGGER.info("Deleting game by name: {}", name);
+      //  LOGGER.info("Deleting game by name: {}", name);
         gameService.deleteGameByName(name);
     }
 }

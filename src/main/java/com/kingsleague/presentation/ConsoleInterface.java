@@ -1,9 +1,11 @@
 package com.kingsleague.presentation;
 
+import com.kingsleague.controller.AvertissementController;
 import com.kingsleague.controller.GameController;
 import com.kingsleague.controller.PlayerController;
 import com.kingsleague.controller.TeamController;
 import com.kingsleague.controller.TournamentController;
+import com.kingsleague.model.Avertissement;
 import com.kingsleague.model.Game;
 import com.kingsleague.model.Player;
 import com.kingsleague.model.Team;
@@ -20,6 +22,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
  
 import java.util.Set;
@@ -64,7 +67,8 @@ public class ConsoleInterface {
     private TeamController teamController;
     private GameController gameController;
     private TournamentController tournamentController;
-
+    private AvertissementController avertissementController;
+ 
     public ConsoleInterface() {
         scanner = new Scanner(System.in);
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -72,13 +76,14 @@ public class ConsoleInterface {
         teamController = context.getBean(TeamController.class);
         gameController = context.getBean(GameController.class);
         tournamentController = context.getBean(TournamentController.class);
+        avertissementController = context.getBean(AvertissementController.class);
     }
 
     public void start() {
         boolean exit = false;
         while (!exit) {
             printMainMenu();
-            int choice = getIntInput(CYAN + "Enter your choice: " + RESET, 1, 5);
+            int choice = getIntInput(CYAN + "Enter your choice: " + RESET, 1, 6);
             switch (choice) {
                 case 1:
                     handlePlayerMenu();
@@ -93,6 +98,9 @@ public class ConsoleInterface {
                     handleTournamentMenu();
                     break;
                 case 5:
+                    handleAdvertissementMenu();
+                    break;
+                case 6:
                     exit = true;
                     break;
                 default:
@@ -102,13 +110,125 @@ public class ConsoleInterface {
         logger.info(GREEN + EXIT + " Thank you for using the Kings League Tournament Management System!" + RESET);
     }
 
+    private void handleAdvertissementMenu() {
+        boolean back = false;
+        while (!back) {
+            logger.info("\n" + PURPLE + MENU + " --- Avertissement Management --- " + MENU + RESET);
+            logger.info(BLUE + "1. " + ADDING + " Add Avertissement" + RESET);
+            logger.info(BLUE + "2. " + VIEW + " View All Avertissements" + RESET);
+            logger.info(BLUE + "3. " + VIEW + " View Teams with Warnings" + RESET);
+            logger.info(BLUE + "4. " + VIEW + " View Teams without Warnings" + RESET);
+            logger.info(BLUE + "5. " + EXIT + " Back to Main Menu" + RESET);
+
+            int choice = getIntInput(CYAN + "Enter your choice: " + RESET, 1, 5);
+
+            switch (choice) {
+                case 1:
+                    addAdvertissement();
+                    break;
+                case 2:
+                    viewAllAdvertissements();
+                    break;
+                case 3:
+                    viewTeamsWithWarnings();
+                    break;
+                case 4:
+                    viewTeamsWithoutWarnings();
+                    break;
+                case 5:
+                    back = true;
+                    break;
+                default:
+                    logger.error(RED + ERROR + " Invalid choice. Please try again." + RESET);
+            }
+        }
+    }
+
+    private void addAdvertissement() {
+        logger.info("\n" + PURPLE + ADDING + " --- Add Avertissement --- " + ADDING + RESET);
+        
+        List<Team> teams = teamController.getAllTeams();
+        if (teams.isEmpty()) {
+            logger.error(RED + ERROR + " No teams available. Please add teams first." + RESET);
+            return;
+        }
+        
+        logger.info("\n" + BLUE + "Available Teams:" + RESET);
+        for (int i = 0; i < teams.size(); i++) {
+            logger.info(CYAN + (i + 1) + ". " + teams.get(i).getName() + RESET);
+        }
+        
+        int teamChoice = getIntInput(CYAN + "Select team number: " + RESET, 1, teams.size()) - 1;
+        Team selectedTeam = teams.get(teamChoice);
+
+        Avertissement avertissement = new Avertissement();
+        avertissement.setTeam(selectedTeam);
+        avertissement.setDateAvertissement(LocalDate.now());
+
+        try {
+            avertissementController.addAdvertissement(avertissement);
+            logger.info(GREEN + SUCCESS + " Avertissement added successfully" + RESET);
+        } catch (Exception e) {
+            logger.error(RED + ERROR + " Failed to add Avertissement: " + e.getMessage() + RESET);
+        }
+    }
+
+    private void viewAllAdvertissements() {
+        logger.info("\n" + PURPLE + VIEW + " --- All Avertissements --- " + VIEW + RESET);
+        displayAvertissements(avertissementController.getAllAdvertissements());
+    }
+
+    private void viewTeamsWithWarnings() {
+        logger.info("\n" + PURPLE + VIEW + " --- Teams with Warnings --- " + VIEW + RESET);
+        displayTeams(avertissementController.getEquipeAvecAver(), "with warnings");
+    }
+
+    private void viewTeamsWithoutWarnings() {
+        logger.info("\n" + PURPLE + VIEW + " --- Teams without Warnings --- " + VIEW + RESET);
+        displayTeams(avertissementController.getEquipeSansAver(), "without warnings");
+    }
+
+    private void displayTeams(List<Team> teams, String warningStatus) {
+        if (teams.isEmpty()) {
+            logger.info(YELLOW + WARNING + " No teams " + warningStatus + " found." + RESET);
+            return;
+        }
+
+        logger.info(BLUE + String.format("%-20s %-15s", "Team Name", "Ranking") + RESET);
+        logger.info(BLUE + "------------------------------------" + RESET);
+        
+        for (Team team : teams) {
+            logger.info(CYAN + String.format("%-20s %-15d",
+                team.getName(),
+                team.getRanking()) + RESET);
+        }
+    }
+
+    private void displayAvertissements(List<Avertissement> avertissements) {
+        if (avertissements.isEmpty()) {
+            logger.info(YELLOW + WARNING + " No Avertissements found." + RESET);
+            return;
+        }
+
+        logger.info(BLUE + String.format("%-20s %-15s %-15s", "Team", "Color", "Date") + RESET);
+        logger.info(BLUE + "------------------------------------------------" + RESET);
+        
+        for (Avertissement av : avertissements) {
+            logger.info(CYAN + String.format("%-20s %-15s %-15s",
+                av.getTeam().getName(),
+                av.getCouleur(),
+                av.getDateAvertissement()) + RESET);
+        }
+    }
+
     private void printMainMenu() {
         logger.info("\n" + PURPLE + MENU + " --- Kings League  --- " + MENU + RESET);
         logger.info(BLUE + "1. " + PLAYER + " Player Management" + RESET);
         logger.info(BLUE + "2. " + TEAM + " Team Management" + RESET);
         logger.info(BLUE + "3. " + GAME + " Game Management" + RESET);
         logger.info(BLUE + "4. " + TOURNAMENT + " Tournament Management" + RESET);
-        logger.info(BLUE + "5. " + EXIT + " Exit" + RESET);
+        logger.info(BLUE + "5. " + WARNING + " Avertissement Management" + RESET);
+        logger.info(BLUE + "6. " + EXIT + " Exit" + RESET);
     }
 
     private void handlePlayerMenu() {
@@ -145,8 +265,8 @@ public class ConsoleInterface {
 
     private void createPlayer() {
         logger.info("\n" + YELLOW + ADDING + " Creating a new player:" + RESET);
-        String username = getStringInput(CYAN + "Enter username: " + RESET, 3, 50);
-        int age = getIntInput(CYAN + "Enter age: " + RESET, 13, 100);
+        String username = getStringInput(CYAN + "Enter username: " + RESET, 3, 30);
+        int age = getIntInput(CYAN + "Enter age: " + RESET, 13, 65);
 
         Player player = new Player();
         player.setUsername(username);
@@ -184,12 +304,12 @@ public class ConsoleInterface {
         Player player = playerOpt.get();
 
         logger.info(YELLOW + EDIT + " Editing player: " + username + RESET);
-        String newUsername = getStringInput(CYAN + "Enter new username (3-50 characters, press enter to keep current): " + RESET);
+        String newUsername = getStringInput(CYAN + "Enter new username (3-30 characters, press enter to keep current): " + RESET);
         if (!newUsername.isEmpty()) {
             player.setUsername(newUsername);
         }
 
-        int newAge = getIntInput(CYAN + "Enter new age (13-100, press enter to keep current): " + RESET, 13, 100);
+        int newAge = getIntInput(CYAN + "Enter new age (13-65, press enter to keep current): " + RESET, 13, 100);
         if (newAge != -1) {
             player.setAge(newAge);
         }
@@ -254,7 +374,7 @@ public class ConsoleInterface {
 
     private void createTeam() {
         logger.info("\n" + YELLOW + ADDING + " Creating a new team:" + RESET);
-        String name = getStringInput(CYAN + "Enter team name: " + RESET, 3, 50);
+        String name = getStringInput(CYAN + "Enter team name: " + RESET, 3, 30);
         int ranking = getIntInput(CYAN + "Enter team ranking: " + RESET, 1, 1000);
 
         Team team = new Team();
@@ -293,7 +413,7 @@ public class ConsoleInterface {
         Team team = teamOpt.get();
 
         logger.info(YELLOW + EDIT + " Editing team: " + name + RESET);
-        String newName = getStringInput(CYAN + "Enter new team name (3-50 characters, press enter to keep current): " + RESET);
+        String newName = getStringInput(CYAN + "Enter new team name (3-30 characters, press enter to keep current): " + RESET);
         if (!newName.isEmpty()) {
             // Update the team name using the existing updateTeam method
             team.setName(newName);
@@ -389,7 +509,7 @@ public class ConsoleInterface {
 
     private void createGame() {
         logger.info("\n" + YELLOW + ADDING + " Creating a new game:" + RESET);
-        String name = getStringInput(CYAN + "Enter game name: " + RESET, 3, 50);
+        String name = getStringInput(CYAN + "Enter game name: " + RESET, 3, 30);
         int difficulty = getIntInput(CYAN + "Enter game difficulty: " + RESET, 1, 10);
         int averageMatchDuration = getIntInput(CYAN + "Enter average match duration in minutes: " + RESET, 1, 180);
 
@@ -430,7 +550,7 @@ public class ConsoleInterface {
         Game game = gameOpt.get();
 
         logger.info(YELLOW + EDIT + " Editing game: " + title + RESET);
-        String newName = getStringInput(CYAN + "Enter new game name (3-50 characters, press enter to keep current): " + RESET);
+        String newName = getStringInput(CYAN + "Enter new game name (3-30 characters, press enter to keep current): " + RESET);
         if (!newName.isEmpty()) {
             game.setName(newName);
         }
@@ -665,7 +785,9 @@ public class ConsoleInterface {
 
     private void changeTournamentStatus() {
         String title = getStringInput(CYAN + "Enter tournament title: " + RESET);
-        TournamentStatut status = getTournamentStatusInput(CYAN + "Enter new status (PLANNED, ONGOING, COMPLETED): " + RESET);
+        TournamentStatut status = getTournamentStatusInput(CYAN + "Enter new status (IN_PROGRESS,\n" +
+                "     COMPLETED,\n" +
+                "     CANCELED): " + RESET);
 
         try {
             tournamentController.changeStatus(title, status);

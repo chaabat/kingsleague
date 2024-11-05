@@ -71,12 +71,12 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public Optional getByTitle(String title) {
-        LOGGER.info("Finding tournament with title: {}", title);
-        TypedQuery<Tournament> query = entityManager.createQuery(
-            "SELECT DISTINCT t FROM Tournament t LEFT JOIN FETCH t.teams LEFT JOIN FETCH t.game WHERE t.title = :title", Tournament.class);
-        query.setParameter("title", title);
-        List<Tournament> results = query.getResultList();
+    public Optional getByTitle(String name) {
+        LOGGER.info("Finding tournament with name: {}", name);
+        TypedQuery<Game> query = entityManager.createQuery(
+            "SELECT  g FROM Game g WHERE g.name = :name", Game.class);
+        query.setParameter("name", name);
+        List<Game> results = query.getResultList();
         return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
 

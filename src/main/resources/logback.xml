@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- Console Appender pour l'interface utilisateur -->
+    <appender name="CONSOLE_UI" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- Console Appender pour les autres logs -->
+    <appender name="CONSOLE_OTHER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>logs/app.log</file>
         <append>true</append>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%file:%line] -%kvp- %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
+    <!-- Logger spécifique pour ConsoleInterface -->
+    <logger name="com.kingsleague.presentation.ConsoleInterface" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE_UI" />
+        <appender-ref ref="FILE" />
+    </logger>
 
-    <root level="info">
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE_OTHER" />
         <appender-ref ref="FILE" />
     </root>
 </configuration>

@@ -9,7 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8473b76b-8a2e-4f3a-b586-4d0b4d8b559e" name="Changes" comment="" />
+    <list default="true" id="8473b76b-8a2e-4f3a-b586-4d0b4d8b559e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TournamentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/controller/TournamentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/ConsoleInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/ConsoleInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/presentation/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/GameRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kingsleague/repository/implementation/GameRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,27 +56,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Display.executor": "Run",
-    "JUnit.PlayerRepositoryImplTest.executor": "Run",
-    "JUnit.PlayerServiceTest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/chaab/Desktop/kingsleague",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Display.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AvertissementServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlayerRepositoryImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlayerServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.kingsleague-tournament-management [clean...].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/chaab/Desktop/kingsleague&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="docs" factoryName="Docutils task">
       <module name="kingsleague" />
@@ -148,6 +165,18 @@
       <workItem from="1730020741381" duration="553000" />
       <workItem from="1730026900523" duration="9771000" />
       <workItem from="1730045136544" duration="2011000" />
+      <workItem from="1730059911439" duration="436000" />
+      <workItem from="1730104163253" duration="2336000" />
+      <workItem from="1730109874519" duration="171000" />
+      <workItem from="1730122649050" duration="5859000" />
+      <workItem from="1730222417394" duration="180000" />
+      <workItem from="1730276381341" duration="2986000" />
+      <workItem from="1730297931935" duration="893000" />
+      <workItem from="1730298859904" duration="62000" />
+      <workItem from="1730299065315" duration="97000" />
+      <workItem from="1730299204800" duration="147000" />
+      <workItem from="1730304067391" duration="9115000" />
+      <workItem from="1730385881063" duration="2173000" />
     </task>
     <servers />
   </component>

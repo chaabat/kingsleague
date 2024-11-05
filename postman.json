@@ -1,0 +1,174 @@
+{
+    "info": {
+      "name": "CapFormation API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Trainers",
+        "item": [
+          {
+            "name": "Get All Trainers",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/api/trainers?page=0&size=10&sort=id,desc",
+                "host": ["{{baseUrl}}"],
+                "path": ["api", "trainers"],
+                "query": [
+                  {"key": "page", "value": "0"},
+                  {"key": "size", "value": "10"},
+                  {"key": "sort", "value": "id,desc"}
+                ]
+              }
+            }
+          },
+          {
+            "name": "Get Trainer by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/trainers/:id",
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          {
+            "name": "Create Trainer",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": "{{baseUrl}}/api/trainers",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"+1234567890\",\n  \"specialization\": \"Java\"\n}"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Students",
+        "item": [
+          {
+            "name": "Get All Students",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/api/students?page=0&size=10&sort=id,desc",
+                "query": [
+                  {"key": "page", "value": "0"},
+                  {"key": "size", "value": "10"},
+                  {"key": "sort", "value": "id,desc"}
+                ]
+              }
+            }
+          },
+          {
+            "name": "Create Student",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": "{{baseUrl}}/api/students",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"phoneNumber\": \"+1234567890\",\n  \"dateOfBirth\": \"2000-01-01\"\n}"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Classes",
+        "item": [
+          {
+            "name": "Get All Classes",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/api/classes?page=0&size=10&sort=id,desc",
+                "query": [
+                  {"key": "page", "value": "0"},
+                  {"key": "size", "value": "10"},
+                  {"key": "sort", "value": "id,desc"}
+                ]
+              }
+            }
+          },
+          {
+            "name": "Create Class",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": "{{baseUrl}}/api/classes",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Java Spring Boot Class\",\n  \"startDate\": \"2024-03-20\",\n  \"endDate\": \"2024-06-20\",\n  \"maxStudents\": 30,\n  \"trainer\": {\n    \"id\": 1\n  }\n}"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Courses",
+        "item": [
+          {
+            "name": "Get All Courses",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/api/courses?page=0&size=10&sort=id,desc",
+                "query": [
+                  {"key": "page", "value": "0"},
+                  {"key": "size", "value": "10"},
+                  {"key": "sort", "value": "id,desc"}
+                ]
+              }
+            }
+          },
+          {
+            "name": "Create Course",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": "{{baseUrl}}/api/courses",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Spring Boot Fundamentals\",\n  \"description\": \"Learn Spring Boot basics\",\n  \"duration\": 40,\n  \"status\": \"UPCOMING\",\n  \"startDate\": \"2024-04-01\",\n  \"endDate\": \"2024-05-01\"\n}"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:8080",
+        "type": "string"
+      }
+    ]
+  }

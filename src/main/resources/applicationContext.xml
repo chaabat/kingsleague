@@ -48,10 +48,15 @@
     <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
-
+<bean id="warningColor" class="java.lang.String">
+    <constructor-arg value="ROUGE"/>
+</bean>
 
     <!-- Repositories -->
     <bean id="playerRepository" class="com.kingsleague.repository.implementation.PlayerRepositoryImpl">
+        <property name="entityManager" ref="entityManager" />
+    </bean>
+    <bean id="avertissementRepository" class="com.kingsleague.repository.implementation.AvertissementRepositoryImpl">
         <property name="entityManager" ref="entityManager" />
     </bean>
 
@@ -63,12 +68,13 @@
         <property name="entityManager" ref="entityManager"/>
     </bean>
 
-    <bean id="tournamentRepositoryExtension" class="com.kingsleague.repository.implementation.TournamentRepositoryExtension"/>
-
     <bean id="gameRepository" class="com.kingsleague.repository.implementation.GameRepositoryImpl">
         <property name="entityManager" ref="entityManager"/>
     </bean>
     <!-- Services -->
+    <bean id="avertissementService" class="com.kingsleague.service.AvertissementService">
+        <property name="avertissementRepository" ref="avertissementRepository"/>
+    </bean>
     <bean id="playerService" class="com.kingsleague.service.PlayerService">
         <property name="playerRepository" ref="playerRepository"/>
     </bean>
@@ -86,6 +92,10 @@
         <property name="gameRepository" ref="gameRepository"/>
     </bean>
     <!-- Controllers -->
+    <bean id="avertissementController" class="com.kingsleague.controller.AvertissementController">
+        <property name="avertissementService" ref="avertissementService"/>
+        <property name="defaultColor" value="ROUGE"/>
+    </bean>
     <bean id="playerController" class="com.kingsleague.controller.PlayerController">
         <property name="playerService" ref="playerService"/>
     </bean>
@@ -101,5 +111,7 @@
     <bean id="gameController" class="com.kingsleague.controller.GameController">
         <property name="gameService" ref="gameService"/>
     </bean>
+
+ 
 
 </beans>
